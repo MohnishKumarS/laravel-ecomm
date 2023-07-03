@@ -40,6 +40,24 @@ class UserController extends Controller
        
     }
 
+    public function register(){
+        if(Session::has('user')){
+            return \redirect('product');
+        }else{
+            return view('register');
+        }
+        
+    }
+    public function register_user(Request $req){
+        $user = new User;
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->password = Hash::make($req->password);
+        $user->save();
+        return \redirect('/login');
+    }
+
+
     public function logout(){
         session()->flush();
 
